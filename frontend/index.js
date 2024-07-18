@@ -37,7 +37,7 @@ return {
     console.log(`{ id: ${learner.id}, email: "${learner.email}", fullName: "${learner.fullName}", mentors: [${learner.mentors.map(mentor => `"${mentor}"`).join(', ')}] }`);
   });
 
-
+// return learners;
 
 }
 catch(err) {
@@ -75,10 +75,38 @@ catch(err) {
     // ❗ Inspect the mock site closely to understand what the initial texts and classes look like!
 
     const card = document.createElement('div')
+    card.classList.add("card")
+    cardsContainer.appendChild(card)
+
     const heading = document.createElement('h3')
+    heading.innerText = `${learner.fullName} , ${learner.id}`
+    card.appendChild(heading)
+
+
+
     const email = document.createElement('div')
+    email.innerText = `${learner.email}`
+    card.appendChild(email)
+
+
+
     const mentorsHeading = document.createElement('h4')
+    mentorsHeading.classList.add("closed")
+    mentorsHeading.innerText = "Mentors"
+    card.appendChild (mentorsHeading)
+
+
+
     const mentorsList = document.createElement('ul')
+
+    for(let names of learner.mentors){
+
+    const li = document.createElement('li')
+    li.innerText = `${names}`
+
+    card.appendChild(mentorsList)
+    mentorsList.appendChild(li)
+    }
 
     // 👆 ==================== TASK 3 END ====================== 👆
 
