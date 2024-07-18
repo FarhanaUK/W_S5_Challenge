@@ -6,16 +6,43 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // 👇 ==================== TASK 1 START ==================== 👇
 
   // 🧠 Use Axios to GET learners and mentors.
+  const requestA = await axios.get(`http://localhost:3003/api/learners`)
+  const requestB = await axios.get(`http://localhost:3003/api/mentors`)
   // ❗ Use the variables `mentors` and `learners` to store the data.
   // ❗ Use the await keyword when using axios.
 
-  let mentors = [] // fix this
-  let learners = [] // fix this
+  let mentors = requestB.data // fix this
+  console.log(mentors)
+  let learners = requestA.data // fix this
+try {
 
   // 👆 ==================== TASK 1 END ====================== 👆
 
   // 👇 ==================== TASK 2 START ==================== 👇
 
+  learners = learners.map((learner) => { 
+ const mentorNames = learner.mentors.map(mentorId => {
+  const mentor = mentors.find(m => m.id === mentorId)
+  return mentor ? mentor.firstName + ' ' + mentor.lastName: "Unknown mentor"
+ })
+return {
+  id: learner.id,
+  email: learner.email,
+  fullName: learner.fullName,
+  mentors: mentorNames
+}
+  })
+
+  learners.forEach(learner => {
+    console.log(`{ id: ${learner.id}, email: "${learner.email}", fullName: "${learner.fullName}", mentors: [${learner.mentors.map(mentor => `"${mentor}"`).join(', ')}] }`);
+  });
+
+
+
+}
+catch(err) {
+  console.log(err.message)
+}
   // 🧠 Combine learners and mentors.
   // ❗ At this point the learner objects only have the mentors' IDs.
   // ❗ Fix the `learners` array so that each learner ends up with this exact structure:
